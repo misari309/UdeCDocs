@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "NkytFekN7hDPPyWUIkGhzC14y0U0TACi3GJHHCp3fuMyCcAcTZ6SgRyKr6kPEjfgireX73qgtf9fbFzZMUcoiA==",
+  "dgSpecHash": "rw8IH92TtQRIQ8/QgaJLpObI4C5mek3S/2MfyTyK2Nc45WqfG2MKdHk7CoyjfXWAc5LCKVdnPLItFSVkjOAnhw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\camil\\source\\repos\\UdeCDocs\\UdeCDocs.csproj",
+  "projectFilePath": "C:\\Users\\camil\\OneDrive\\Documents\\GitHub\\UdeCDocs\\UdeCDocs\\UdeCDocs.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\camil\\.nuget\\packages\\elasticsearch.net\\7.17.4\\elasticsearch.net.7.17.4.nupkg.sha512",
     "C:\\Users\\camil\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
