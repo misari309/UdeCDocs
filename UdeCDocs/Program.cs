@@ -12,6 +12,13 @@ namespace UdeCDocs
             var builder = WebApplication.CreateBuilder(args);
             // Add services to the container.
             builder.Services.AddMvc();
+            builder.Services.AddSwaggerGen();
+            builder.Services.AddControllers().AddNewtonsoftJson(options => 
+            {
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+
+            });
+            
             builder.Services.AddDbContext<UdeCDocsContext>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
@@ -20,9 +27,6 @@ namespace UdeCDocs
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
-
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

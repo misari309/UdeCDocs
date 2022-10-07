@@ -17,12 +17,11 @@ namespace UdeCDocs.Controllers
             {
                 using (UdeCDocsContext db = new UdeCDocsContext())
                 {
-                    var lst = db.Users.Find(Iduser);
-                    db.Comments.Where(c => c.Iduser == Iduser).ToList().ForEach(c => {
-                        lst.Comments.Add(c);
-                    });
+                    var user = db.Users.Find(Iduser);
+                    var comments = db.Comments.Where(c => c.Iduser == Iduser).ToList();
+                    user.Comments = comments;
                     response.State = 1;
-                    response.Data = lst;
+                    response.Data = user;
                 }
             }
             catch (Exception ex) 
