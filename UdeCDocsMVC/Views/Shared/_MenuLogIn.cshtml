@@ -1,0 +1,17 @@
+﻿@if(Context.User.Identity.IsAuthenticated == false)
+{   <div>
+        <a class="nav-link text-dark" asp-controller="Users" asp-action="Login">Iniciar sesión</a>
+    </div>
+    <div>
+        <a class="nav-link text-dark" asp-controller="Users" asp-action="SignUpUser">Registrarse</a>
+    </div>
+}
+else
+{
+    <div>
+        <a class="nav-link text-dark" asp-controller="Users" asp-action="Details" asp-route-id="@Context.User.FindFirst("Iduser").Value">Hola @Context.User.Identity.Name</a>
+    </div>
+    <div>
+        <a class="nav-link text-dark" asp-controller="Users" asp-action="LogOut">Cerrar sesión</a>
+    </div>  
+}
