@@ -10397,11 +10397,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\camil\\source\\repos\\UdeCDocsMVC\\UdeCDocsMVC.csproj",
+      "projectUniqueName": "C:\\Users\\camil\\OneDrive\\Documents\\GitHub\\UdeCDocs\\UdeCDocsMVC\\UdeCDocsMVC.csproj",
       "projectName": "UdeCDocsMVC",
-      "projectPath": "C:\\Users\\camil\\source\\repos\\UdeCDocsMVC\\UdeCDocsMVC.csproj",
+      "projectPath": "C:\\Users\\camil\\OneDrive\\Documents\\GitHub\\UdeCDocs\\UdeCDocsMVC\\UdeCDocsMVC.csproj",
       "packagesPath": "C:\\Users\\camil\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\camil\\source\\repos\\UdeCDocsMVC\\obj\\",
+      "outputPath": "C:\\Users\\camil\\OneDrive\\Documents\\GitHub\\UdeCDocs\\UdeCDocsMVC\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

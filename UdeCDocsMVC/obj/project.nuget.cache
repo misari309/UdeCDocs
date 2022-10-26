@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "s0usVQbpnrUcjcnJngxfVJYcUl11fhKyxlAXbYlzCnCEVnuQ71f1Qx5RO6/GOghP8m6Fbu23aLfHiSQ4s1eKNg==",
+  "dgSpecHash": "TgI393j60aA8ZPYeW1ggiQW6guS2dm7e1UXUHfrdiMKiZ7du33S1OrbftglQ6oost6FWL01Zkc4C26ORdMh7nw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\camil\\source\\repos\\UdeCDocsMVC\\UdeCDocsMVC.csproj",
+  "projectFilePath": "C:\\Users\\camil\\OneDrive\\Documents\\GitHub\\UdeCDocs\\UdeCDocsMVC\\UdeCDocsMVC.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\camil\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\camil\\.nuget\\packages\\messagepack\\2.1.152\\messagepack.2.1.152.nupkg.sha512",
