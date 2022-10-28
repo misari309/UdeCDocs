@@ -35,6 +35,12 @@ namespace UdeCDocsMVC
             {
                 config.AccessDeniedPath = "/Home/Index";
             });
+
+            builder.Services.AddAuthorization(options =>
+            {
+                options.AddPolicy("RequireUdeCUserRole",
+                     policy => policy.RequireRole("1"));
+            });
             builder.Services.AddSingleton<ITempDataProvider, CookieTempDataProvider>();
             builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
