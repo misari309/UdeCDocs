@@ -5,11 +5,11 @@
     Layout = "_Layout_Minimal";
 }
 
-<h4>SignUp</h4>
+<h4>Registro UdeC</h4>
 <hr />
 <div class="row">
     <div>
-        <a asp-action="SignUpUdeC">Registro UdeC</a>
+        <a asp-action="SignUpUser">Registro normal</a>
     </div>
     <div class="col-md-4">
         <form asp-action="SignUpUdeC">
@@ -40,11 +40,11 @@
             </div>
             <div class="form-group">
                 <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" />
+                <input asp-for="Password" class="form-control" type="password"/>
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Registrarse" class="btn btn-primary" />
             </div>
         </form>
         <p>@ViewBag.Message</p>
