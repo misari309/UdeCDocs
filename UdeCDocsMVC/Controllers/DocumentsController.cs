@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,7 @@ using UdeCDocsMVC.Models.SysModels;
 
 namespace UdeCDocsMVC.Controllers
 {
+    [Authorize(Policy = "RequireUdeCUserRole")]
     public class DocumentsController : Controller
     {
         private readonly UdeCDocsContext _context;
@@ -50,9 +52,11 @@ namespace UdeCDocsMVC.Controllers
         }
 
         // GET: Documents/Create
+        
         public IActionResult Create()
         {
-            ViewData["Idfield"] = new SelectList(_context.Fields, "Idfield", "Idfield");
+            User user = _context.Users.Find(Int32.Parse(User.FindFirst("Iduser").Value));
+            ViewData["Idfield"] = new SelectList(_context.Fields.Where(f => f.Idfaculty == user.Idfaculty), "Idfield", "Field1");
             return View();
         }
 
@@ -67,8 +71,10 @@ namespace UdeCDocsMVC.Controllers
             {
                 if (document != null)
                 {
+
                     string documentName = document.Direction.FileName;
-                    var fileName = System.IO.Path.Combine(_environment.ContentRootPath,"Uploads", documentName);
+                    var guid = Guid.NewGuid();
+                    var fileName = System.IO.Path.Combine(_environment.ContentRootPath,"wwwroot\\Uploads", documentName + guid);
                     await document.Direction.CopyToAsync(new System.IO.FileStream(fileName, System.IO.FileMode.Create));
                     int Iduser = Int32.Parse(User.FindFirst("Iduser").Value);
                     DateTime date = DateTime.Now;
@@ -87,7 +93,8 @@ namespace UdeCDocsMVC.Controllers
                     await _context.SaveChangesAsync();
                     return RedirectToAction("Index", "Home");
                 }
-                ViewData["Idfield"] = new SelectList(_context.Fields, "Idfield", "Idfield", document.Idfield);
+                User user = _context.Users.Find(Int32.Parse(User.FindFirst("Iduser").Value));
+                ViewData["Idfield"] = new SelectList(_context.Fields.Where(f => f.Idfaculty == user.Idfaculty), "Idfield", "Field1", document.Idfield);
                 return View(document);
             }
             
