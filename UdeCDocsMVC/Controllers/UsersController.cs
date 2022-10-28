@@ -5,11 +5,13 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using UdeCDocsMVC.Models;
 using UdeCDocsMVC.Models.SysModels;
+using UdeCDocsMVC.Utilities;
 
 namespace UdeCDocsMVC.Controllers
 {
@@ -60,8 +62,7 @@ namespace UdeCDocsMVC.Controllers
             {
                 return NotFound();
             }
-            ViewData["Idfaculty"] = new SelectList(_context.Faculties, "Idfaculty", "Idfaculty", user.Idfaculty);
-            ViewData["Idrol"] = new SelectList(_context.Rols, "Idrol", "Idrol", user.Idrol);
+            ViewData["Idfaculty"] = new SelectList(_context.Faculties, "Idfaculty", "Faculty1", user.Idfaculty);
             return View(user);
         }
 
@@ -153,12 +154,13 @@ namespace UdeCDocsMVC.Controllers
         {
             if (ModelState.IsValid & !_context.Users.Any(u => u.Email == cUser.Email))
             {
+                Encrypt encrypt = new Encrypt();
                 User user = new User
                 {
                     Name = cUser.Name,
                     Email = cUser.Email,
                     City = cUser.City,
-                    Password = cUser.Password,
+                    Password = encrypt.GetSHA256(cUser.Password),
                     Idrol = 2
                 };
                 _context.Add(user);
@@ -198,14 +200,17 @@ namespace UdeCDocsMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login([Bind("Email, Password")] CUser cUser)
         {
-            var user = _context.Users.Where(u => u.Email == cUser.Email && u.Password == cUser.Password).Single();
-            if (!_context.Users.Any(u => u.Email == cUser.Email & u.Password == cUser.Password))
+            Encrypt encrypt = new Encrypt();
+            var password = encrypt.GetSHA256(cUser.Password);
+            
+            if (!_context.Users.Any(u => u.Email == cUser.Email & u.Password == password))
             {
                 ViewData["Message"] = "Usuario no registrado.";
                 return View();
             }
             else 
             {
+                var user = _context.Users.Where(u => u.Email == cUser.Email && u.Password == password).Single();
                 ClaimsIdentity identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name, ClaimTypes.Role);
                 Claim claimUserName = new Claim(ClaimTypes.Name, user.Name);
                 Claim claimRole = new Claim(ClaimTypes.Role, user.Idrol.ToString());
@@ -236,7 +241,7 @@ namespace UdeCDocsMVC.Controllers
         //SignUpUdeC
         public IActionResult SignUpUdeC()
         {
-            ViewData["Idfaculty"] = new SelectList(_context.Faculties, "Idfaculty", "Idfaculty");
+            ViewData["Idfaculty"] = new SelectList(_context.Faculties, "Idfaculty", "Faculty1");
             return View();
         }
         //SignUp
@@ -244,6 +249,7 @@ namespace UdeCDocsMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SignUpUdeC([Bind("Name,Email,Institution,City,Idfaculty,Password")] CUserUdeC cUser)
         {
+            Encrypt encrypt = new Encrypt();
             User user = new User
             {
                 Name = cUser.Name,
@@ -251,7 +257,7 @@ namespace UdeCDocsMVC.Controllers
                 Institution = cUser.Institution,
                 City = cUser.City,
                 Idfaculty = cUser.Idfaculty,
-                Password = cUser.Password,
+                Password = encrypt.GetSHA256(cUser.Password),
                 Idrol = 1
             };
 
@@ -262,7 +268,25 @@ namespace UdeCDocsMVC.Controllers
                 ViewData["Message"] = "Usuario registrado correctamente.";
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Idfaculty"] = new SelectList(_context.Faculties, "Idfaculty", "Idfaculty", user.Idfaculty);
+
+            ClaimsIdentity identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name, ClaimTypes.Role);
+            Claim claimUserName = new Claim(ClaimTypes.Name, user.Name);
+            Claim claimRole = new Claim(ClaimTypes.Role, user.Idrol.ToString());
+            Claim claimIdUsuario = new Claim("Iduser", user.Iduser.ToString());
+            Claim claimEmail = new Claim("Email", user.Email);
+
+            identity.AddClaim(claimUserName);
+            identity.AddClaim(claimRole);
+            identity.AddClaim(claimIdUsuario);
+            identity.AddClaim(claimEmail);
+
+            ClaimsPrincipal userPrincipal = new ClaimsPrincipal(identity);
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, userPrincipal, new AuthenticationProperties
+            {
+                ExpiresUtc = DateTime.Now.AddMinutes(45)
+            });
+
+            ViewData["Idfaculty"] = new SelectList(_context.Faculties, "Idfaculty", "Faculty1", user.Idfaculty);
             ViewData["Message"] = "El usuario ya está registrado.";
             return View(user);
 
