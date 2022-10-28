@@ -44,10 +44,7 @@ namespace UdeCDocsMVC.Models
 
                 entity.Property(e => e.Idcomment).HasColumnName("IDComment");
 
-                entity.Property(e => e.Body)
-                    .HasMaxLength(256)
-                    .HasColumnName("body")
-                    .IsFixedLength();
+                entity.Property(e => e.Body).HasColumnName("body");
 
                 entity.Property(e => e.Date)
                     .HasColumnType("date")
@@ -79,33 +76,30 @@ namespace UdeCDocsMVC.Models
                 entity.Property(e => e.Iddocument).HasColumnName("IDDocument");
 
                 entity.Property(e => e.Abstract)
-                    .HasMaxLength(256)
-                    .HasColumnName("abstract")
-                    .IsFixedLength();
+                    .IsUnicode(false)
+                    .HasColumnName("abstract");
 
                 entity.Property(e => e.Authors)
-                    .HasMaxLength(256)
-                    .HasColumnName("authors")
-                    .IsFixedLength();
+                    .IsUnicode(false)
+                    .HasColumnName("authors");
 
                 entity.Property(e => e.Direction)
                     .HasMaxLength(256)
-                    .HasColumnName("direction")
-                    .IsFixedLength();
+                    .IsUnicode(false)
+                    .HasColumnName("direction");
 
                 entity.Property(e => e.Idfield).HasColumnName("IDField");
 
                 entity.Property(e => e.Iduser).HasColumnName("IDUser");
 
                 entity.Property(e => e.Keywords)
-                    .HasMaxLength(256)
-                    .HasColumnName("keywords")
-                    .IsFixedLength();
+                    .IsUnicode(false)
+                    .HasColumnName("keywords");
 
                 entity.Property(e => e.Name)
                     .HasMaxLength(100)
-                    .HasColumnName("name")
-                    .IsFixedLength();
+                    .IsUnicode(false)
+                    .HasColumnName("name");
 
                 entity.Property(e => e.PublicationDate)
                     .HasColumnType("date")
@@ -134,8 +128,8 @@ namespace UdeCDocsMVC.Models
 
                 entity.Property(e => e.Faculty1)
                     .HasMaxLength(100)
-                    .HasColumnName("faculty")
-                    .IsFixedLength();
+                    .IsUnicode(false)
+                    .HasColumnName("faculty");
             });
 
             modelBuilder.Entity<Field>(entity =>
@@ -148,8 +142,8 @@ namespace UdeCDocsMVC.Models
 
                 entity.Property(e => e.Field1)
                     .HasMaxLength(100)
-                    .HasColumnName("field")
-                    .IsFixedLength();
+                    .IsUnicode(false)
+                    .HasColumnName("field");
 
                 entity.Property(e => e.Idfaculty).HasColumnName("IDFaculty");
 
@@ -170,9 +164,9 @@ namespace UdeCDocsMVC.Models
                 entity.Property(e => e.Idrol).HasColumnName("IDRol");
 
                 entity.Property(e => e.Role)
-                    .HasMaxLength(15)
-                    .HasColumnName("role")
-                    .IsFixedLength();
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("role");
             });
 
             modelBuilder.Entity<TypeVote>(entity =>
@@ -200,10 +194,12 @@ namespace UdeCDocsMVC.Models
 
                 entity.Property(e => e.City)
                     .HasMaxLength(50)
+                    .IsUnicode(false)
                     .HasColumnName("city");
 
                 entity.Property(e => e.Email)
                     .HasMaxLength(50)
+                    .IsUnicode(false)
                     .HasColumnName("email");
 
                 entity.Property(e => e.Idfaculty).HasColumnName("IDFaculty");
@@ -212,14 +208,17 @@ namespace UdeCDocsMVC.Models
 
                 entity.Property(e => e.Institution)
                     .HasMaxLength(50)
+                    .IsUnicode(false)
                     .HasColumnName("institution");
 
                 entity.Property(e => e.Name)
                     .HasMaxLength(50)
+                    .IsUnicode(false)
                     .HasColumnName("name");
 
                 entity.Property(e => e.Password)
                     .HasMaxLength(100)
+                    .IsUnicode(false)
                     .HasColumnName("password");
 
                 entity.HasOne(d => d.IdfacultyNavigation)
