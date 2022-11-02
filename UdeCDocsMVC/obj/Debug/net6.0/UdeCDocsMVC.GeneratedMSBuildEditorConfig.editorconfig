@@ -8,97 +8,97 @@ build_property.PlatformNeutralAssembly =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = UdeCDocsMVC
 build_property.RootNamespace = UdeCDocsMVC
-build_property.ProjectDir = C:\Users\camil\OneDrive\Documents\GitHub\UdeCDocs\UdeCDocsMVC\
+build_property.ProjectDir = C:\Users\Usuario\OneDrive\Documents\Documents\GitHub\UdeCDocs\UdeCDocsMVC\
 build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\camil\OneDrive\Documents\GitHub\UdeCDocs\UdeCDocsMVC
+build_property.MSBuildProjectDirectory = C:\Users\Usuario\OneDrive\Documents\Documents\GitHub\UdeCDocs\UdeCDocsMVC
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/camil/OneDrive/Documents/GitHub/UdeCDocs/UdeCDocsMVC/Views/Documents/Create.cshtml]
+[C:/Users/Usuario/OneDrive/Documents/Documents/GitHub/UdeCDocs/UdeCDocsMVC/Views/Documents/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9jdW1lbnRzXENyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/camil/OneDrive/Documents/GitHub/UdeCDocs/UdeCDocsMVC/Views/Documents/Delete.cshtml]
+[C:/Users/Usuario/OneDrive/Documents/Documents/GitHub/UdeCDocs/UdeCDocsMVC/Views/Documents/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9jdW1lbnRzXERlbGV0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/camil/OneDrive/Documents/GitHub/UdeCDocs/UdeCDocsMVC/Views/Documents/Details.cshtml]
+[C:/Users/Usuario/OneDrive/Documents/Documents/GitHub/UdeCDocs/UdeCDocsMVC/Views/Documents/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9jdW1lbnRzXERldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/camil/OneDrive/Documents/GitHub/UdeCDocs/UdeCDocsMVC/Views/Documents/Edit.cshtml]
+[C:/Users/Usuario/OneDrive/Documents/Documents/GitHub/UdeCDocs/UdeCDocsMVC/Views/Documents/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9jdW1lbnRzXEVkaXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/camil/OneDrive/Documents/GitHub/UdeCDocs/UdeCDocsMVC/Views/Documents/Index.cshtml]
+[C:/Users/Usuario/OneDrive/Documents/Documents/GitHub/UdeCDocs/UdeCDocsMVC/Views/Documents/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9jdW1lbnRzXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/camil/OneDrive/Documents/GitHub/UdeCDocs/UdeCDocsMVC/Views/Home/Index.cshtml]
+[C:/Users/Usuario/OneDrive/Documents/Documents/GitHub/UdeCDocs/UdeCDocsMVC/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/camil/OneDrive/Documents/GitHub/UdeCDocs/UdeCDocsMVC/Views/Home/Privacy.cshtml]
+[C:/Users/Usuario/OneDrive/Documents/Documents/GitHub/UdeCDocs/UdeCDocsMVC/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/camil/OneDrive/Documents/GitHub/UdeCDocs/UdeCDocsMVC/Views/Shared/Error.cshtml]
+[C:/Users/Usuario/OneDrive/Documents/Documents/GitHub/UdeCDocs/UdeCDocsMVC/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/camil/OneDrive/Documents/GitHub/UdeCDocs/UdeCDocsMVC/Views/Shared/_MenuLogIn.cshtml]
+[C:/Users/Usuario/OneDrive/Documents/Documents/GitHub/UdeCDocs/UdeCDocsMVC/Views/Shared/_MenuLogIn.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9NZW51TG9nSW4uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/camil/OneDrive/Documents/GitHub/UdeCDocs/UdeCDocsMVC/Views/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/Usuario/OneDrive/Documents/Documents/GitHub/UdeCDocs/UdeCDocsMVC/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/camil/OneDrive/Documents/GitHub/UdeCDocs/UdeCDocsMVC/Views/Users/AccessDenied.cshtml]
+[C:/Users/Usuario/OneDrive/Documents/Documents/GitHub/UdeCDocs/UdeCDocsMVC/Views/Users/AccessDenied.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcQWNjZXNzRGVuaWVkLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/camil/OneDrive/Documents/GitHub/UdeCDocs/UdeCDocsMVC/Views/Users/Delete.cshtml]
+[C:/Users/Usuario/OneDrive/Documents/Documents/GitHub/UdeCDocs/UdeCDocsMVC/Views/Users/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/camil/OneDrive/Documents/GitHub/UdeCDocs/UdeCDocsMVC/Views/Users/Details.cshtml]
+[C:/Users/Usuario/OneDrive/Documents/Documents/GitHub/UdeCDocs/UdeCDocsMVC/Views/Users/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/camil/OneDrive/Documents/GitHub/UdeCDocs/UdeCDocsMVC/Views/Users/Edit.cshtml]
+[C:/Users/Usuario/OneDrive/Documents/Documents/GitHub/UdeCDocs/UdeCDocsMVC/Views/Users/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/camil/OneDrive/Documents/GitHub/UdeCDocs/UdeCDocsMVC/Views/Users/Index.cshtml]
+[C:/Users/Usuario/OneDrive/Documents/Documents/GitHub/UdeCDocs/UdeCDocsMVC/Views/Users/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/camil/OneDrive/Documents/GitHub/UdeCDocs/UdeCDocsMVC/Views/Users/Login.cshtml]
+[C:/Users/Usuario/OneDrive/Documents/Documents/GitHub/UdeCDocs/UdeCDocsMVC/Views/Users/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcTG9naW4uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/camil/OneDrive/Documents/GitHub/UdeCDocs/UdeCDocsMVC/Views/Users/SignUpUdeC.cshtml]
+[C:/Users/Usuario/OneDrive/Documents/Documents/GitHub/UdeCDocs/UdeCDocsMVC/Views/Users/SignUpUdeC.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcU2lnblVwVWRlQy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/camil/OneDrive/Documents/GitHub/UdeCDocs/UdeCDocsMVC/Views/Users/SignUpUser.cshtml]
+[C:/Users/Usuario/OneDrive/Documents/Documents/GitHub/UdeCDocs/UdeCDocsMVC/Views/Users/SignUpUser.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlcnNcU2lnblVwVXNlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/camil/OneDrive/Documents/GitHub/UdeCDocs/UdeCDocsMVC/Views/_ViewImports.cshtml]
+[C:/Users/Usuario/OneDrive/Documents/Documents/GitHub/UdeCDocs/UdeCDocsMVC/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/camil/OneDrive/Documents/GitHub/UdeCDocs/UdeCDocsMVC/Views/_ViewStart.cshtml]
+[C:/Users/Usuario/OneDrive/Documents/Documents/GitHub/UdeCDocs/UdeCDocsMVC/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/camil/OneDrive/Documents/GitHub/UdeCDocs/UdeCDocsMVC/Views/Shared/_Layout_Minimal.cshtml]
+[C:/Users/Usuario/OneDrive/Documents/Documents/GitHub/UdeCDocs/UdeCDocsMVC/Views/Shared/_Layout_Minimal.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXRfTWluaW1hbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = b-xi2c1dlphl
 
-[C:/Users/camil/OneDrive/Documents/GitHub/UdeCDocs/UdeCDocsMVC/Views/Shared/_Layout_Session.cshtml]
+[C:/Users/Usuario/OneDrive/Documents/Documents/GitHub/UdeCDocs/UdeCDocsMVC/Views/Shared/_Layout_Session.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXRfU2Vzc2lvbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = b-7011oht0xn

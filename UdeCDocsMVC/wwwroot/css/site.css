@@ -16,3 +16,98 @@ html {
 body {
   margin-bottom: 60px;
 }
+.form {
+    background: #113019;
+    margin-top: 5%;
+    color: white;
+    height: 420px;
+    width: 420px;
+    justify-content: center;
+    border-radius: 4px;
+    display: flex;
+    justify-items:center;
+    box-shadow: black 2px 2px 6px 0px;
+}
+.form-content {  
+    margin-top:20px;
+    justify-content:center;    
+    margin-right:20px;
+    margin-left:20px;
+    
+}
+.form h4 {
+    margin-top: 10px;
+    margin-bottom: 14px;
+    text-align: center;
+    font-family: 'Quicksand', sans-serif;
+    font-weight:bold;
+    font-size:32px;
+    letter-spacing:5px;
+}
+#subtitle {
+    font-family: 'Quicksand', sans-serif;
+    font-weight:400;
+    font-size: 15px;    
+}
+
+.form-control {
+    width: 320px;
+    background: #224B2D;
+    border-radius: 14px;
+    height: 30px;
+    margin-top: 8px;
+    margin-bottom: 15px;
+    color: white;
+    text-align: center;
+    font-size: 12px;
+    border: 0px;
+}
+    .form-control:valid:required {
+        box-shadow: green 0px 0px 1px 0px;        
+    }
+        .form-control:valid:required:hover {
+            box-shadow: green 0px 0px 4px 1px;
+        }
+    .form-control:invalid:required {
+        box-shadow: #9D1919 0px 0px 1px 0px;
+    }
+        .form-control:invalid:required:hover {
+            box-shadow: #9D1919 0px 0px 4px 1px;
+        }
+
+.links {
+    margin-top: 10px;
+    justify-content: center;
+    font-family: 'Quicksand', sans-serif;
+}
+    .links a {
+        color: white;
+        font-family: 'Quicksand', sans-serif;
+        text-align:left;
+    }
+    .links a:hover{
+        color:lightgreen;
+    }
+
+.button{
+    justify-content:center;
+    position:center;
+    justify-items:center;
+    align-items:center;
+    align-content:center;
+    display:flex;
+}
+#button {
+    margin-top: 10px;
+    display: flex;
+    background: #357546;
+    border: 0;
+    font-family: 'Quicksand', sans-serif;
+    font-size:16px;
+    text-align:center;
+    width:70px;
+    height:40px;
+}
+    #button:hover {
+        background: #4E915E;
+    }

@@ -4,38 +4,51 @@
     ViewData["Title"] = "Login";
     Layout = "_Layout_Minimal";
 }
-
-<h4>Login</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Login">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
+<center>
+    <div class="form">
+    <br />
+    <div class="form-content">
+        <h4 >LOG IN</h4>
+        <hr/>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-inputs">
+                <form asp-action="Login">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Email" class="control-label" id="subtitle"></label>
+                                <input asp-for="Email" class="form-control" required />                               
+                        @*<span asp-validation-for="Email" class="text-danger"></span>*@
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Password" class="control-label" id="subtitle"></label>
+                                <input asp-for="Password" class="form-control" required />                                   
+                        @*<span asp-validation-for="Password" class="text-danger" ></span>*@
+                    </div>
+                    <div class="form-group">
+                        <div class="button">
+                        <input type="submit" value="Log in" class="btn btn-primary" id="button"/>
+                                </div>
+                    </div>
+                </form>
+            
+                <p>@ViewBag.Message</p>
+                </div>
+             </div>
+        </div>
+        <div class="links">
+        <div>
+            <hr />
+            
+            <a asp-action="Index" class="links">Regresar al Inicio</a>
+        </div>
+            <div>
+                    <a asp-action="SignUpUser" class="links"> Registrarse</a>
             </div>
-            <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-        <p>@ViewBag.Message</p>
+        </div>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Regresar al Inicio</a>
-</div>
-<div>
-    <a asp-action="SignUpUser">Registrarse</a>
-</div>
-
+</center>
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
