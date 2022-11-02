@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System.Configuration;
+using System.Text.Json.Serialization;
 using UdeCDocsMVC.Models;
 
 namespace UdeCDocsMVC
@@ -40,9 +41,13 @@ namespace UdeCDocsMVC
             {
                 options.AddPolicy("RequireUdeCUserRole",
                      policy => policy.RequireRole("1"));
+                options.AddPolicy("RequireRegistered",
+                     policy => policy.RequireRole("2", "1"));
             });
             builder.Services.AddSingleton<ITempDataProvider, CookieTempDataProvider>();
             builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            builder.Services.AddControllers().AddJsonOptions(x =>
+                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
             var app = builder.Build();
 

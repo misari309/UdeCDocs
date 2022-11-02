@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using System.Runtime.ConstrainedExecution;
 using UdeCDocsMVC.Models;
@@ -17,10 +18,10 @@ namespace UdeCDocsMVC.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-
-            return View();
+            var udeCDocsContext = _context.Documents.Include(d => d.IdfieldNavigation);
+            return View(await udeCDocsContext.ToListAsync());
         }
 
         public IActionResult Privacy()

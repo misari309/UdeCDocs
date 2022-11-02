@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<UdeCDocsMVC.Models.Document>
+@{
     ViewData["Title"] = "Home Page";
     Layout = "_Layout_Session";
 }
@@ -7,3 +8,51 @@
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Abstract)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Keywords)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PublicationDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Authors)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Abstract)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Keywords)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PublicationDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Authors)
+                </td>   
+                <td>
+                    <a asp-controller="DocumentsAPI" asp-action="GetDocument" asp-route-id="@item.Iddocument">get json</a>
+                    <a asp-controller="Documents" asp-action="Details" asp-route-id="@item.Iddocument">ver documento</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

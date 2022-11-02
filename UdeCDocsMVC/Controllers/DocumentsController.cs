@@ -13,7 +13,7 @@ using UdeCDocsMVC.Models.SysModels;
 
 namespace UdeCDocsMVC.Controllers
 {
-    [Authorize(Policy = "RequireUdeCUserRole")]
+    
     public class DocumentsController : Controller
     {
         private readonly UdeCDocsContext _context;
@@ -33,6 +33,7 @@ namespace UdeCDocsMVC.Controllers
         }
 
         // GET: Documents/Details/5
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Documents == null)
@@ -47,12 +48,12 @@ namespace UdeCDocsMVC.Controllers
             {
                 return NotFound();
             }
-
+            TempData["Iddocument"] = id;
             return View(document);
         }
 
         // GET: Documents/Create
-        
+        [Authorize(Policy = "RequireUdeCUserRole")]
         public IActionResult Create()
         {
             User user = _context.Users.Find(Int32.Parse(User.FindFirst("Iduser").Value));
@@ -65,6 +66,7 @@ namespace UdeCDocsMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy = "RequireUdeCUserRole")]
         public async Task<IActionResult> Create([Bind("Name,Abstract,Keywords,Authors,Direction,Idfield")] CDocument document)
         {
             using(_context)
@@ -182,13 +184,83 @@ namespace UdeCDocsMVC.Controllers
                 return Problem("Entity set 'UdeCDocsContext.Documents'  is null.");
             }
             var document = await _context.Documents.FindAsync(id);
+            var listComments = await _context.Comments.Where(c => c.Iddocument == id).ToListAsync();
+            var listVotes = await _context.Votes.Where(v => v.Iddocument == id).ToListAsync();
             if (document != null)
             {
+                if (listComments != null) 
+                {
+                    foreach (Comment c in listComments)
+                    {
+                        _context.Comments.Remove(c);
+                    }
+                }
+                if (listVotes != null)
+                {
+                    foreach (Vote v in listVotes)
+                    {
+                        _context.Votes.Remove(v);
+                    }
+                }
+                
                 _context.Documents.Remove(document);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Policy = "RequireRegistered")]
+        public async Task<IActionResult> CreateComment(string body)
+        {
+            using (_context)
+            {
+                if (body != null)
+                {
+                    int Iduser = Int32.Parse(User.FindFirst("Iduser").Value);
+                    DateTime date = DateTime.Now;
+                    Comment comment = new Comment
+                    {
+                        Body = body,
+                        Date = date,
+                        Iddocument = Int32.Parse(TempData["Iddocument"].ToString()),
+                        Iduser = Iduser
+                    };
+                    _context.Comments.Add(comment);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                return RedirectToAction(nameof(Index));
+            }
+
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Policy = "RequireRegistered")]
+        public async Task<IActionResult> Upvote()
+        {
+            using (_context)
+            {
+                if (true)
+                {
+                    int Iduser = Int32.Parse(User.FindFirst("Iduser").Value);
+                    Vote vote = new Vote
+                    {
+                        Value = 1,
+                        IdtypeVote = 1,
+                        Iddocument = Int32.Parse(TempData["Iddocument"].ToString()),
+                        Iduser = Iduser
+                    };
+                    _context.Votes.Add(vote);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                return RedirectToAction(nameof(Index));
+            }
+
         }
 
         private bool DocumentExists(int id)
