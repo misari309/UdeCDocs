@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace UdeCDocsMVC.Models
 {
-    public partial class UdeCDocsContext : DbContext
+    public partial class UdecDocsContext : DbContext
     {
-        public UdeCDocsContext()
+        public UdecDocsContext()
         {
         }
 
-        public UdeCDocsContext(DbContextOptions<UdeCDocsContext> options)
+        public UdecDocsContext(DbContextOptions<UdecDocsContext> options)
             : base(options)
         {
         }
@@ -25,15 +25,6 @@ namespace UdeCDocsMVC.Models
         public virtual DbSet<User> Users { get; set; } = null!;
         public virtual DbSet<Vote> Votes { get; set; } = null!;
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=LAPTOP-96B65B8M\\SQLEXPRESS; Database=UdeCDocs; Trusted_Connection=true;");
-            }
-        }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Comment>(entity =>
@@ -46,8 +37,10 @@ namespace UdeCDocsMVC.Models
 
                 entity.Property(e => e.Body).HasColumnName("body");
 
+                entity.Property(e => e.UserW).HasColumnName("userW");
+
                 entity.Property(e => e.Date)
-                    .HasColumnType("date")
+                    .HasColumnType("datetime")
                     .HasColumnName("date");
 
                 entity.Property(e => e.Iddocument).HasColumnName("IDDocument");
@@ -102,7 +95,7 @@ namespace UdeCDocsMVC.Models
                     .HasColumnName("name");
 
                 entity.Property(e => e.PublicationDate)
-                    .HasColumnType("date")
+                    .HasColumnType("datetime")
                     .HasColumnName("publicationDate");
 
                 entity.HasOne(d => d.IdfieldNavigation)
@@ -130,6 +123,11 @@ namespace UdeCDocsMVC.Models
                     .HasMaxLength(100)
                     .IsUnicode(false)
                     .HasColumnName("faculty");
+
+                entity.Property(e => e.Description)
+                    .HasMaxLength(maxLength: 500)
+                    .IsUnicode(false)
+                    .HasColumnName("description");
             });
 
             modelBuilder.Entity<Field>(entity =>
@@ -239,9 +237,7 @@ namespace UdeCDocsMVC.Models
 
                 entity.ToTable("Vote");
 
-                entity.Property(e => e.Idvote)
-                    .ValueGeneratedOnAdd()
-                    .HasColumnName("IDVote");
+                entity.Property(e => e.Idvote).HasColumnName("IDVote");
 
                 entity.Property(e => e.Iddocument).HasColumnName("IDDocument");
 
@@ -257,17 +253,17 @@ namespace UdeCDocsMVC.Models
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Vote_Document");
 
+                entity.HasOne(d => d.IdtypeVoteNavigation)
+                    .WithMany(p => p.Votes)
+                    .HasForeignKey(d => d.IdtypeVote)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Vote_TypeVote1");
+
                 entity.HasOne(d => d.IduserNavigation)
                     .WithMany(p => p.Votes)
                     .HasForeignKey(d => d.Iduser)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Vote_User");
-
-                entity.HasOne(d => d.IdvoteNavigation)
-                    .WithOne(p => p.Vote)
-                    .HasForeignKey<Vote>(d => d.Idvote)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Vote_TypeVote");
             });
 
             OnModelCreatingPartial(modelBuilder);

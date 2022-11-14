@@ -12,7 +12,7 @@ namespace UdeCDocsMVC.Models
         public int IdtypeVote { get; set; }
 
         public virtual Document IddocumentNavigation { get; set; } = null!;
+        public virtual TypeVote IdtypeVoteNavigation { get; set; } = null!;
         public virtual User IduserNavigation { get; set; } = null!;
-        public virtual TypeVote IdvoteNavigation { get; set; } = null!;
     }
 }

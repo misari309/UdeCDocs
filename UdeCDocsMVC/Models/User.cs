@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Security.Cryptography;
-using System.IO;
 
 namespace UdeCDocsMVC.Models
 {
@@ -29,6 +26,5 @@ namespace UdeCDocsMVC.Models
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<Document> Documents { get; set; }
         public virtual ICollection<Vote> Votes { get; set; }
-
     }
 }

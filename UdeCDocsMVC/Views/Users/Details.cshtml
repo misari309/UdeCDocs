@@ -4,102 +4,76 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+@if (Context.User.Identity.IsAuthenticated == true)
+{
+    <br />
+    <h1>
+        @Context.User.Identity.Name
+    </h1>
+}
 
 <div>
-    <h4>User</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Institution)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Institution)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.City)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.City)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Password)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Password)
-        </dd>
-        
-    </dl>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Documents.ElementAt(0).Name)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Documents.ElementAt(0).Abstract)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Documents.ElementAt(0).Keywords)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Documents.ElementAt(0).PublicationDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Documents.ElementAt(0).Authors)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Documents.ElementAt(0).Iduser)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
+    <h5>Correo electrónico: </h5><p>  @Model.Email</p>
+     <h5>Institución: </h5><p>  @Model.Institution</p>
+     <h5>Ciudad: </h5><p>  @Model.City</p>
+
+    <div>
+        @if (Context.User.IsInRole("1"))
+        {
+            <a class="btn btn-outline-success" asp-controller="Documents" asp-action="Create">Crear documento</a>
+        }
+        <a class="btn btn-outline-secondary" asp-action="Edit" asp-route-id="@Model?.Iduser">Editar usuario</a>
+    </div>
+    @if (Context.User.IsInRole("1"))
+    {
+        @if(Model.Documents != null)
+        {
+            <br />
+            <h4>Documentos</h4>
             @foreach (var item in Model.Documents)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Abstract)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Keywords)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PublicationDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Authors)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Iduser)
-                    </td>
-                    <td>
-                        <a asp-action="Edit" asp-controller="Documents" asp-route-id="@item.Iddocument">Edit</a> |
-                        <a asp-action="GetDocument" asp-controller="DocumentsAPI" asp-route-id="@item.Iddocument">Details</a> |
-                        <a asp-action="Delete" asp-controller="Documents" asp-route-id="@item.Iddocument">Delete</a>
-                    </td>
-                </tr>
+                <br />
+                <div class="card">
+                    <h5 class="card-header">@item.Name</h5>
+                    <div class="card-body">
+                        <h4 class="card-title">@item.Keywords</h4>
+                        <h6 class="card-title">@item.PublicationDate</h6>
+                        <p class="card-text">@item.Abstract</p>
+                        <a class="btn btn-outline-secondary" asp-action="Edit" asp-controller="Documents" asp-route-id="@item.Iddocument">Editar</a>
+                        <a class="btn btn-outline-primary" asp-action="Details" asp-controller="Documents" asp-route-id="@item.Iddocument">Ver</a>
+                        <a class="btn btn-outline-danger" asp-action="Delete" asp-controller="Documents" asp-route-id="@item.Iddocument">Borrar</a>
+                    </div>
+                </div>
             }
-        </tbody>
-    </table>
+        }
+    }
+    @if(Model.Comments.Count() != 0){
+        <br />
+        <h4>Interacciones</h4>
+        <div class="py-5">
+            <div class="container">
+                <div class="row hidden-md-up">
+                    @foreach (var item in Model.Comments)
+                    {
+                        <div class="col-md-4">
+                            <div class="card" style="width: 20rem;">
+                              <div class="card-body">
+                                <a class="btn btn-outline-success card-title" asp-action="Details" asp-controller="Documents" asp-route-id="@item.Iddocument">Ir al documento</a>
+                                <p class="card-text">@item.Body</p>
+                                <p class="card-text"><small class="text-muted">@item.Date</small></p>
+                                <a class="btn btn-outline-danger" asp-controller="Documents" asp-action="DeleteComment" asp-route-id="@item.Idcomment">Borrar</a>
+                              </div>
+                            </div>
+                        </div>
+
+                    }
+                </div>
+            </div>
+        </div>
+    }
+    
 </div>
-<div>
-    <a asp-controller="Documents" asp-action="Create">Crear documento</a>
-    <a asp-action="Edit" asp-route-id="@Model?.Iduser">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+
+<br />
+<br />
+<br />

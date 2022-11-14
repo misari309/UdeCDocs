@@ -5,58 +5,75 @@
     Layout = "_Layout_Minimal";
 }
 
-<h4>Registro UdeC</h4>
-<hr />
-<div class="row">
-    <div>
-        <a asp-action="SignUpUser">Registro normal</a>
-    </div>
-    <div class="col-md-4">
-        <form asp-action="SignUpUdeC">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Institution" class="control-label"></label>
-                <input asp-for="Institution" class="form-control" />
-                <span asp-validation-for="Institution" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="City" class="control-label"></label>
-                <input asp-for="City" class="form-control" />
-                <span asp-validation-for="City" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Idfaculty" class="control-label"></label>
-                <select asp-for="Idfaculty" class="form-control" asp-items="ViewBag.Idfaculty"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" type="password"/>
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Registrarse" class="btn btn-primary" />
-            </div>
-        </form>
-        <p>@ViewBag.Message</p>
-    </div>
-    <div>
-        <a asp-action="Login">Iniciar sesión</a>
-    </div>
-</div>
+<center>
+    <div class="formReg">
+        <br />
 
-<div>
-    <a asp-action="Index">Regresar al Inicio</a>
-</div>
+        <div class="form-content">
+            <h4>Registro UdeC</h4>
+            <hr />
+            <div class="row">
+                <div>
+                    <a asp-action="SignUpUser" class="btn btn-outline-info">No soy estudiante de Udec</a>
+                </div>
+                <div class="col-md-4">
+                    <div>
+                        <form asp-action="SignUpUdeC">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                <label asp-for="Name" class="control-label">Nombre</label>
+                                <input asp-for="Name" class="form-control" />
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Email" class="control-label">Correo</label>
+                                <input asp-for="Email" class="form-control" />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Institution" class="control-label">Institución</label>
+                                <input asp-for="Institution" class="form-control" />
+                                <span asp-validation-for="Institution" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="City" class="control-label">Ciudad</label>
+                                <input asp-for="City" class="form-control" />
+                                <span asp-validation-for="City" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Idfaculty" class="control-label">Facultad</label>
+                                <select asp-for="Idfaculty" class="form-control" asp-items="ViewBag.Idfaculty"></select>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Password" class="control-label">Contraseña</label>
+                                <input asp-for="Password" class="form-control" />
+                                <span asp-validation-for="Password" class="text-danger"></span>
+                            </div>
+                            <div class="form-group" style="margin-left:130%">
+                                <input type="submit" value="Registrar" class="btn btn-primary" />
+                            </div>
+
+                        </form>
+                        <p>@ViewBag.Message</p>
+                    </div>
+                </div>
+                <div class="links">
+                    <div>
+                        <a class="btn btn-success" asp-action="Login" class="links">Iniciar sesión</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="links">
+                <a class="btn btn-dark" asp-controller="Home" asp-action="Index" class="links">Regresar al Inicio</a>
+            </div>
+
+
+        </div>
+
+    </div>
+
+</center>
 
 @section Scripts {
     @{

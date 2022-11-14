@@ -8,6 +8,8 @@ namespace UdeCDocsMVC.Models
         public int Idcomment { get; set; }
         public string Body { get; set; } = null!;
         public DateTime Date { get; set; }
+
+        public string UserW { get; set; } = null!;
         public int Iduser { get; set; }
         public int Iddocument { get; set; }
 

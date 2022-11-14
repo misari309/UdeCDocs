@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Amazon.Auth.AccessControlPolicy;
+using Amazon.Runtime.Internal;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -12,44 +15,55 @@ using Microsoft.EntityFrameworkCore;
 using UdeCDocsMVC.Models;
 using UdeCDocsMVC.Models.SysModels;
 using UdeCDocsMVC.Utilities;
+using unirest_net.http;
 
 namespace UdeCDocsMVC.Controllers
 {
     public class UsersController : Controller
     {
-        private readonly UdeCDocsContext _context;
+        private readonly UdecDocsContext _context;
 
-        public UsersController(UdeCDocsContext context)
+        public UsersController(UdecDocsContext context)
         {
             _context = context;
         }
 
-        // GET: Users
-        public async Task<IActionResult> Index()
-        {
-            var user = _context.Users.Where(u => u.Idrol == 2);
-            return View(await user.ToListAsync());
-        }
-
+        //Get user details
         // GET: Users/Details/5
+        [Authorize(Policy = "RequireRegistered")]
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Users == null)
+            if (User.Identity.IsAuthenticated == true)
             {
-                return NotFound();
+                int Iduser = Int32.Parse(User.FindFirst("Iduser").Value);
+                if (Iduser == id)
+                {
+                    if (id == null || _context.Users == null)
+                    {
+                        return NotFound();
+                    }
+
+                    var user = await _context.Users.FirstOrDefaultAsync(m => m.Iduser == id);
+                    user.Documents = await _context.Documents.Where(d => d.Iduser == user.Iduser).ToListAsync();
+                    user.Votes = await _context.Votes.Where(v => v.Iduser == user.Iduser).ToListAsync();
+                    user.Comments = await _context.Comments.Where(c => c.Iduser == user.Iduser).ToListAsync();
+                    if (user == null)
+                    {
+                        return NotFound();
+                    }
+                    return View(user);
+                }
+
+                return RedirectToAction("Index", "Home");
+
             }
 
-            var user = await _context.Users.FirstOrDefaultAsync(m => m.Iduser == id);
-            user.Documents = await _context.Documents.Where(d => d.Iduser == user.Iduser).ToListAsync();
-            if (user == null)
-            {
-                return NotFound();
-            }
+            return RedirectToAction("Index", "Home");
 
-            return View(user);
         }
-
+        //Edit user
         // GET: Users/Edit/5
+        [Authorize(Policy = "RequireRegistered")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Users == null)
@@ -66,80 +80,38 @@ namespace UdeCDocsMVC.Controllers
             return View(user);
         }
 
+        //Edit user
         // POST: Users/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Iduser,Name,Email,Institution,City,Password,Idrol,Idfaculty")] User user)
+        [Authorize(Policy = "RequireRegistered")]
+        public async Task<IActionResult> Edit(string Name, string Institution, string City)
         {
-            if (id != user.Iduser)
+            if (!User.Identity.IsAuthenticated)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(user);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!UserExists(user.Iduser))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["Idfaculty"] = new SelectList(_context.Faculties, "Idfaculty", "Idfaculty", user.Idfaculty);
-            ViewData["Idrol"] = new SelectList(_context.Rols, "Idrol", "Idrol", user.Idrol);
-            return View(user);
-        }
+            int Iduser = Int32.Parse(User.FindFirst("Iduser").Value);
 
-        // GET: Users/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null || _context.Users == null)
+            var user1 = await _context.Users.FindAsync(Iduser);
+
+
+            if (Name == null)
             {
-                return NotFound();
+                ViewData["Idfaculty"] = new SelectList(_context.Faculties, "Idfaculty", "Faculty1", user1.Idfaculty);
+                return View(user1);
+            }
+            else
+            {
+                user1.Name = Name;
+                user1.Institution = Institution;
+                user1.City = City;
+                _context.Update(user1);
+                await _context.SaveChangesAsync();
             }
 
-            var user = await _context.Users
-                .Include(u => u.IdfacultyNavigation)
-                .Include(u => u.IdrolNavigation)
-                .FirstOrDefaultAsync(m => m.Iduser == id);
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            return View(user);
-        }
-
-        // POST: Users/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            if (_context.Users == null)
-            {
-                return Problem("Entity set 'UdeCDocsContext.Users'  is null.");
-            }
-            var user = await _context.Users.FindAsync(id);
-            if (user != null)
-            {
-                _context.Users.Remove(user);
-            }
-            
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Details), new { id = Iduser });
         }
 
         //SignUp
@@ -152,7 +124,14 @@ namespace UdeCDocsMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SignUpUser([Bind("Name,Email,City,Password")] CUser cUser)
         {
-            if (ModelState.IsValid & !_context.Users.Any(u => u.Email == cUser.Email))
+            //API Validate Email
+            string urapi = "https://mailcheck.p.rapidapi.com/?domain=" + cUser.Email;
+            HttpResponse<string> response = Unirest.get(urapi).header("X-RapidAPI-Key", "9069330d76msh87f2fd09f59e5fap1893aejsnc49d292c162c")
+                                                             .header("X-RapidAPI-Host", "mailcheck.p.rapidapi.com").asJson<string>();
+            var body = response.Body.ToString();
+            //API end
+
+            if (ModelState.IsValid & !_context.Users.Any(u => u.Email == cUser.Email) && body.Contains("\"valid\":true,"))
             {
                 Encrypt encrypt = new Encrypt();
                 User user = new User
@@ -185,8 +164,12 @@ namespace UdeCDocsMVC.Controllers
 
                 return RedirectToAction("Index", "Home");
             }
+            else
+            {
+                ViewData["Message"] = "Ingrese credenciales correctas.";
+                return View(cUser);
+            }
             ViewData["Message"] = "El usuario ya está registrado.";
-
             return View(cUser);
         }
 
@@ -202,13 +185,13 @@ namespace UdeCDocsMVC.Controllers
         {
             Encrypt encrypt = new Encrypt();
             var password = encrypt.GetSHA256(cUser.Password);
-            
+
             if (!_context.Users.Any(u => u.Email == cUser.Email & u.Password == password))
             {
                 ViewData["Message"] = "Usuario no registrado.";
                 return View();
             }
-            else 
+            else
             {
                 var user = _context.Users.Where(u => u.Email == cUser.Email && u.Password == password).Single();
                 ClaimsIdentity identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name, ClaimTypes.Role);
@@ -244,7 +227,7 @@ namespace UdeCDocsMVC.Controllers
             ViewData["Idfaculty"] = new SelectList(_context.Faculties, "Idfaculty", "Faculty1");
             return View();
         }
-        //SignUp
+        //SignUpUdeC
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SignUpUdeC([Bind("Name,Email,Institution,City,Idfaculty,Password")] CUserUdeC cUser)
@@ -261,30 +244,34 @@ namespace UdeCDocsMVC.Controllers
                 Idrol = 1
             };
 
+            
+
             if (ModelState.IsValid & !_context.Users.Any(u => u.Email == cUser.Email))
             {
                 _context.Add(user);
                 await _context.SaveChangesAsync();
+
+                ClaimsIdentity identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name, ClaimTypes.Role);
+                Claim claimUserName = new Claim(ClaimTypes.Name, user.Name);
+                Claim claimRole = new Claim(ClaimTypes.Role, user.Idrol.ToString());
+                Claim claimIdUsuario = new Claim("Iduser", user.Iduser.ToString());
+                Claim claimEmail = new Claim("Email", user.Email);
+
+                identity.AddClaim(claimUserName);
+                identity.AddClaim(claimRole);
+                identity.AddClaim(claimIdUsuario);
+                identity.AddClaim(claimEmail);
+
+                ClaimsPrincipal userPrincipal = new ClaimsPrincipal(identity);
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, userPrincipal, new AuthenticationProperties
+                {
+                    ExpiresUtc = DateTime.Now.AddMinutes(45)
+                });
+
                 ViewData["Message"] = "Usuario registrado correctamente.";
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Home");
+
             }
-
-            ClaimsIdentity identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name, ClaimTypes.Role);
-            Claim claimUserName = new Claim(ClaimTypes.Name, user.Name);
-            Claim claimRole = new Claim(ClaimTypes.Role, user.Idrol.ToString());
-            Claim claimIdUsuario = new Claim("Iduser", user.Iduser.ToString());
-            Claim claimEmail = new Claim("Email", user.Email);
-
-            identity.AddClaim(claimUserName);
-            identity.AddClaim(claimRole);
-            identity.AddClaim(claimIdUsuario);
-            identity.AddClaim(claimEmail);
-
-            ClaimsPrincipal userPrincipal = new ClaimsPrincipal(identity);
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, userPrincipal, new AuthenticationProperties
-            {
-                ExpiresUtc = DateTime.Now.AddMinutes(45)
-            });
 
             ViewData["Idfaculty"] = new SelectList(_context.Faculties, "Idfaculty", "Faculty1", user.Idfaculty);
             ViewData["Message"] = "El usuario ya está registrado.";
@@ -294,7 +281,7 @@ namespace UdeCDocsMVC.Controllers
 
         private bool UserExists(int id)
         {
-          return _context.Users.Any(e => e.Iduser == id);
+            return _context.Users.Any(e => e.Iduser == id);
         }
     }
 }

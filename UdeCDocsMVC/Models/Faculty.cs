@@ -13,6 +13,8 @@ namespace UdeCDocsMVC.Models
 
         public int Idfaculty { get; set; }
         public string Faculty1 { get; set; } = null!;
+        public string? Description { get; set; } = null!;
+
 
         public virtual ICollection<Field> Fields { get; set; }
         public virtual ICollection<User> Users { get; set; }

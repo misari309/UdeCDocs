@@ -25,5 +25,20 @@ namespace UdeCDocsMVC.Models
         public virtual User IduserNavigation { get; set; } = null!;
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<Vote> Votes { get; set; }
+
+        public float calcRecommendationIndex() 
+        {
+            float recommendationIndex;
+            int upvotes = 0;
+            int downvotes = 1;
+            upvotes = Votes.Where(v => v.IdtypeVote == 1).ToList().Count();
+            downvotes = Votes.Where(v => v.IdtypeVote == 2).ToList().Count();
+            if(downvotes == 0) 
+            {
+                downvotes = 1;
+            }
+            recommendationIndex = (float)((upvotes*upvotes)+(2*upvotes*downvotes)-(downvotes*downvotes)) / (100*downvotes);
+            return recommendationIndex;
+        }
     }
 }

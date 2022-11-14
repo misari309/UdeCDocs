@@ -1,0 +1,126 @@
+﻿@model IEnumerable<UdeCDocsMVC.Models.Faculty>
+@{
+    ViewData["Title"] = "Facultades";
+    Layout = "_Layout_Session";
+}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.1/font/bootstrap-icons.css">
+
+<div style="justify-content:center; align-content:center; margin-bottom:30px; margin-left:140px;align-items:center;">
+    @foreach (var item in Model)
+    {
+        <div class="container-faculty">
+            <div class="info-faculty">
+                @if (@item.Idfaculty == 1)
+                {
+                    <a name="ingenieria" />
+                    <img src="~/img/ingenieria.png"
+                 style="float: right;
+                 margin-right:0px;
+                 margin-top:0px;
+                 margin-left: 50px;
+                 height:300px;">
+                }
+                else
+                {
+                    @if (@item.Idfaculty == 2)
+                    {
+                        <a name="educacion" />
+                        <img src="~/img/educacion.png"
+                 style="float: right;
+                        margin-right: 7px;
+                        margin-top: 60px;
+                        margin-left: 50px;
+                        height: 260px;
+                        margin-bottom:55px;">
+                    }
+                    else
+                    {
+                        @if (@item.Idfaculty == 3)
+                        {
+                            <a name="salud" />
+                            <img src="~/img/salud.png"
+                 style="float: right;
+                            margin-right: 10px;
+                            margin-top: 30px;
+                            margin-left: 50px;
+                            height: 280px;
+                            margin-bottom:0px;">
+                        }
+                        else
+                        {
+                        } @if (@item.Idfaculty == 4)
+                        {
+                            <a name="administración" />
+                            <img src="~/img/administrar.png"
+                 style="float: right;
+                            margin-right: 10px;
+                            margin-left: 50px;
+                            height: 260px;
+                            margin-bottom:0px;">
+                        }
+                        else
+                        {
+                            @if (@item.Idfaculty == 5)
+                            {
+                                <a name="agronomía" />
+                                <img src="~/img/agro.png"
+                 style="float: right;
+                                margin-right: 10px;
+                                margin-left: 50px;
+                                height: 280px;
+                                margin-bottom:0px;
+                                margin-top:0px;">
+                            }
+                            else
+                            {
+                                @if (@item.Idfaculty == 6)
+                                {
+                                    <a name="deporte" />
+                                    <img src="~/img/deporte.png"
+                 style="float: right;
+                                    margin-top: 0px;
+                                    margin-left: 60px;
+                                    margin-bottom: 0px;
+                                    right:0px;
+                                    height: 255px;">
+                                }
+                                else
+                                {
+                                    @if (@item.Idfaculty == 7)
+                                    {
+                                        <a name="humanidades" />
+                                        <img src="~/img/humanidad.png"
+                 style="float: right;
+                                        margin-right: 20px;
+                                        margin-top: 50px;
+                                        margin-left: 50px;
+                                        margin-bottom:0px;
+                                        height: 310px;">
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                }
+                @if (@item.Idfaculty == 4 || @item.Idfaculty == 5 || @item.Idfaculty == 6)
+                {
+                    <h2>@Html.DisplayFor(ModelItem=>item.Faculty1)</h2>
+                    <p>@Html.DisplayFor(ModelItem=>item.Description)</p>
+                    <a class="btn btn-outline-success" asp-controller="Home" asp-action="Faculty" asp-route-id="@item.Idfaculty">Ver documentos</a>
+                    <br />
+                }
+                else
+                {
+                    <h2>@Html.DisplayFor(ModelItem=>item.Faculty1)</h2>
+                    <p>@Html.DisplayFor(ModelItem=>item.Description)</p>
+                    <i></i>
+                    <a class="btn btn-outline-success" asp-controller="Home" asp-action="Faculty" asp-route-id="@item.Idfaculty">Ver documentos</a>
+                }
+
+            </div>
+        </div>
+        <br />
+
+    }
+</div>

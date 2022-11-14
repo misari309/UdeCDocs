@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using UdeCDocsMVC.Models.API;
 using UdeCDocsMVC.Models;
 
 namespace UdeCDocsMVC.Controllers
@@ -13,97 +14,51 @@ namespace UdeCDocsMVC.Controllers
     [ApiController]
     public class DocumentsAPIController : ControllerBase
     {
-        private readonly UdeCDocsContext _context;
+        private readonly UdecDocsContext _context;
 
-        public DocumentsAPIController(UdeCDocsContext context)
+        public DocumentsAPIController(UdecDocsContext context)
         {
             _context = context;
         }
-
-        // GET: api/DocumentsAPI
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Document>>> GetDocuments()
-        {
-            return await _context.Documents.ToListAsync();
-        }
-
+        //GET documento json
         // GET: api/DocumentsAPI/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Document>> GetDocument(int id)
+        public async Task<ActionResult<DocumentAPI>> GetDocument(int id)
         {
             var document = await _context.Documents.FindAsync(id);
-            
+
             if (document == null)
             {
                 return NotFound();
             }
-
-            document.Comments = await _context.Comments.Where(c => c.Iddocument == id).ToListAsync();
-            document.Votes = await _context.Votes.Where(c => c.Iddocument == id).ToListAsync();
-            return document;
-        }
-
-        // PUT: api/DocumentsAPI/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutDocument(int id, Document document)
-        {
-            if (id != document.Iddocument)
+            DocumentAPI documentAPI = new DocumentAPI
             {
-                return BadRequest();
-            }
+                Name = document.Name,
+                Abstract = document.Abstract,
+                Keywords = document.Keywords,
+                PublicationDate = document.PublicationDate,
+                Authors = document.Authors,
+                Direction = "http://udecdocs.somee.com/Uploads/" + document.Direction
+            };
 
-            _context.Entry(document).State = EntityState.Modified;
-
-            try
+            List<Comment> comments = await _context.Comments.Where(c => c.Iddocument == id).ToListAsync();
+            List<CommentAPI> commentAPIs = new List<CommentAPI>();
+            foreach (Comment item in comments)
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!DocumentExists(id))
+                CommentAPI commentAPIaux = new CommentAPI
                 {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                    Body = item.Body,
+                    Date = item.Date,
+                    UserW = item.UserW
+                };
+                commentAPIs.Add(commentAPIaux);
             }
-
-            return NoContent();
-        }
-
-        // POST: api/DocumentsAPI
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Document>> PostDocument(Document document)
-        {
-            _context.Documents.Add(document);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetDocument", new { id = document.Iddocument }, document);
-        }
-
-        // DELETE: api/DocumentsAPI/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteDocument(int id)
-        {
-            var document = await _context.Documents.FindAsync(id);
-            if (document == null)
-            {
-                return NotFound();
-            }
-
-            _context.Documents.Remove(document);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool DocumentExists(int id)
-        {
-            return _context.Documents.Any(e => e.Iddocument == id);
+            documentAPI.Comments = commentAPIs;
+            List<Vote> upvotes = await _context.Votes.Where(c => c.Iddocument == id && c.IdtypeVote == 1).ToListAsync();
+            List<Vote> downvotes = await _context.Votes.Where(c => c.Iddocument == id && c.IdtypeVote == 2).ToListAsync();
+            documentAPI.Upvotes = upvotes.Count();
+            documentAPI.Downvotes = downvotes.Count();
+            return documentAPI;
         }
     }
 }

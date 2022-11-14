@@ -1,58 +1,38 @@
-﻿@model IEnumerable<UdeCDocsMVC.Models.Document>
+﻿@model UdeCDocsMVC.Models.SysModels.HomeModel
 @{
     ViewData["Title"] = "Home Page";
     Layout = "_Layout_Session";
 }
+@section headerSection{
+    <header class="py-5 bg-image-full" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)),url('https://images.unsplash.com/photo-1619410283995-43d9134e7656?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80')">
+        <div class="text-center my-5">
+            <img class="img-fluid rounded-circle mb-4" src="https://images.unsplash.com/photo-1600003263720-95b45a4035d5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" alt="..." />
+            <h1 class="text-white fs-3 fw-bolder">Facultad de Ingeniería</h1>
+            <a class="text-white-50 mb-0" asp-controller="Home" asp-action="Faculty" asp-route-id="1">Descubre</a>
+        </div>
+    </header>
+}
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Abstract)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Keywords)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PublicationDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Authors)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
+
+    @for (int i = 0; i < Model.DocumentsOrder.Count; i++)
+    {
+        if (i < 10)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Abstract)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Keywords)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PublicationDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Authors)
-                </td>   
-                <td>
-                    <a asp-controller="DocumentsAPI" asp-action="GetDocument" asp-route-id="@item.Iddocument">get json</a>
-                    <a asp-controller="Documents" asp-action="Details" asp-route-id="@item.Iddocument">ver documento</a>
-                </td>
-            </tr>
+        <br />
+        <div class="card" style="box-shadow: 0px 0px 30px black;">
+                <h4 class="card-header">@Model.DocumentsOrder.ElementAt(i).Name</h4>
+                <div class="card-body">
+                    <h5 class="card-title">@Model.DocumentsOrder.ElementAt(i).Keywords</h5>
+                    <h6 class="card-title">@Model.DocumentsOrder.ElementAt(i).PublicationDate</h6>
+                    <p class="card-text">@Model.DocumentsOrder.ElementAt(i).Abstract</p>
+                    <a class="btn btn-success" asp-controller="DocumentsAPI" asp-action="GetDocument" asp-route-id="@Model.DocumentsOrder.ElementAt(i).Iddocument">JSON</a>
+                    <a class="btn btn-primary" asp-controller="Documents" asp-action="Details" asp-route-id="@Model.DocumentsOrder.ElementAt(i).Iddocument">Ver documento</a>
+                </div>
+            </div>
         }
-    </tbody>
-</table>
+        <br />
+
+    }
+<br />
+<br />
+<br />

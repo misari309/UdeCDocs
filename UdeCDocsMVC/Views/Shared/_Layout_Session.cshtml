@@ -3,34 +3,36 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - UdeCDocsMVC</title>
+    <title>@ViewData["Title"] - UdeCDocs</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/UdeCDocsMVC.styles.css" asp-append-version="true" />
-</head>
+    <link rel="icon" type="image/png" sizes="32x32" href="~/favicon.png">
+</head> 
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="border-bottom navbar navbar-expand-lg navbar-dark bg-white" style="background-color:#007b3e;">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">UdeC Docs</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                <img src="~/img/logo/logo.svg" style="margin-right:20px;">
+                <a class="navbar-brand nav-item item-nav-udec" asp-area="" asp-controller="Home" asp-action="Index">UdeC Docs</a>
+                
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Inicio</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Faculties">Facultades</a>
                         </li>
+                        <partial name="_MenuLogIn" />
                     </ul>
-                    <partial name="_MenuLogIn" />
                 </div>
             </div>
         </nav>
     </header>
+    @RenderSection("headerSection", required:false)
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
@@ -39,7 +41,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2022 - RegistroLogin - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2022 - UdeCDocs
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

@@ -17,16 +17,17 @@ namespace UdeCDocsMVC
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-            builder.Services.AddDbContext<UdeCDocsContext>(options =>
+            builder.Services.AddDbContext<UdecDocsContext>(options =>
             {
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+                options.UseSqlServer(builder.Configuration.GetConnectionString("Soome"));
 
             });
-
+            
             builder.Services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromMinutes(50);
             });
+
             builder.Services.AddAuthentication(options =>
             {
                 options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -43,7 +44,9 @@ namespace UdeCDocsMVC
                      policy => policy.RequireRole("1"));
                 options.AddPolicy("RequireRegistered",
                      policy => policy.RequireRole("2", "1"));
+
             });
+
             builder.Services.AddSingleton<ITempDataProvider, CookieTempDataProvider>();
             builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             builder.Services.AddControllers().AddJsonOptions(x =>
@@ -52,9 +55,11 @@ namespace UdeCDocsMVC
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
-            if (!app.Environment.IsDevelopment())
+            if (!app.Environment.IsProduction())
             {
                 app.UseExceptionHandler("/Home/Error");
+                app.UseStatusCodePages();
+                app.UseStatusCodePagesWithRedirects("/Error/Http?statusCode={0}");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }

@@ -1,0 +1,53 @@
+﻿@model UdeCDocsMVC.Models.Faculty
+@{
+    <!--este es el titulo de la ventana-->
+    ViewData["Title"] = "Facultad de " + Model.Faculty1;
+    Layout = "_Layout_Session";
+}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.1/font/bootstrap-icons.css">
+<div>
+    <!--acá se carga cada uno de las carreras de la facultdad-->
+    @for (int i = 0; i < Model.Fields.Count(); i++)
+    {
+        <!--este if es para saber si la carrera tiene documentos, si no tienen no se muestra nada-->
+        if (Model.Fields.ElementAt(i).Documents.Count() > 0)
+        {
+            <!--nombre de la carrera-->
+            <h2 id="titleCareer">@Model.Fields.ElementAt(i).Field1</h2>
+            if (Model.Fields.ElementAt(i).Field1 == "Facultad de Ingenieria")
+            {
+                <a name="ingenieria"></a>
+            }
+            <br />
+            <!--esta tabla va a mostrar cada uno de los documentos que tiene la carrera-->
+            <!--acá se cargan cada uno de los documentos de la carrera-->
+            @foreach (var item in Model.Fields.ElementAt(i).Documents)
+            {
+                <div class="container-docFac">
+
+                    <div class="info-docFac">
+                        <img src="~/img/logo2.png">
+                        <h2>@Html.DisplayFor(modelItem => item.Name)</h2>
+                        <p id="abstract">@item.Abstract</p>
+                        <p id=keywords>@Html.DisplayFor(modelItem => item.Keywords)</p>
+                        <p id="authors">@Html.DisplayFor(modelItem => item.Authors)</p>
+
+                        <i class="bi bi-hand-thumbs-up-fill" style="font-size:30px; color:#134410;margin-right:10px;"></i>
+                        @item.Votes.Where(v => v.IdtypeVote == 1).Count()
+                        <i class="bi bi-hand-thumbs-down-fill" style="font-size:30px; color:#134410;"></i>
+                        @item.Votes.Where(v => v.IdtypeVote == 2).Count()
+                        <br />
+                        <br />
+                        <a asp-controller="Documents" asp-action="Details" asp-route-id="@item.Iddocument" class="bi bi-eye-fill" style="font-size:30px; color:#134410;margin-right:10px;"></a>
+                        <a asp-controller="DocumentsAPI" asp-action="GetDocument" asp-route-id="@item.Iddocument" class="bi bi-filetype-json" style="font-size:30px; color:#134410;"></a>
+                        <p style="color:dimgrey; text-align:right;">@Html.DisplayFor(modelItem => item.PublicationDate)</p>
+                    </div>
+                </div>
+
+
+            }
+
+            <br />
+        }
+    }
+</div>
